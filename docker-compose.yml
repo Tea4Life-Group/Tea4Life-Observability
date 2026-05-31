@@ -6,9 +6,9 @@ services:
     expose:
       - "9090"
     environment:
-      ORDER_METRICS_URL: ${ORDER_METRICS_URL:-https://api.tea4life.click/order-service/actuator/prometheus}
-      PRODUCT_METRICS_URL: ${PRODUCT_METRICS_URL:-https://api.tea4life.click/product-service/actuator/prometheus}
-      USER_METRICS_URL: ${USER_METRICS_URL:-https://api.tea4life.click/user-service/actuator/prometheus}
+      ORDER_METRICS_URL: ${ORDER_METRICS_URL}
+      PRODUCT_METRICS_URL: ${PRODUCT_METRICS_URL}
+      USER_METRICS_URL: ${USER_METRICS_URL}
     volumes:
       - ./prometheus.yml.template:/etc/prometheus/prometheus.yml.template:ro
       - ./prometheus/render-config.sh:/etc/prometheus/render-config.sh:ro

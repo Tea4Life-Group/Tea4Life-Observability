@@ -5,7 +5,7 @@ Prometheus and Grafana config for Tea4Life backend metrics.
 ## Dokploy deployment
 
 1. Bind this repository as a Docker Compose app in Dokploy.
-2. Configure these environment variables in Dokploy:
+2. Configure these required environment variables in Dokploy:
 
    ```text
    ORDER_METRICS_URL=https://api.tea4life.click/order-service/actuator/prometheus
