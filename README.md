@@ -19,6 +19,8 @@ Prometheus and Grafana config for Tea4Life backend metrics.
    - Prometheus: container port `9090`
    - Grafana: container port `3000`
 
+The compose file uses `expose` instead of host `ports` to avoid conflicts with existing Grafana or Prometheus containers on the Dokploy server.
+
 5. Open Prometheus target health:
 
    ```text

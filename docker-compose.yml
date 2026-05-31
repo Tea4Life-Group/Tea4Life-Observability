@@ -3,8 +3,8 @@ services:
   prometheus:
     image: prom/prometheus:latest
     restart: unless-stopped
-    ports:
-      - "9090:9090"
+    expose:
+      - "9090"
     environment:
       ORDER_METRICS_URL: ${ORDER_METRICS_URL:-https://api.tea4life.click/order-service/actuator/prometheus}
       PRODUCT_METRICS_URL: ${PRODUCT_METRICS_URL:-https://api.tea4life.click/product-service/actuator/prometheus}
@@ -20,8 +20,8 @@ services:
   grafana:
     image: grafana/grafana:latest
     restart: unless-stopped
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     environment:
       GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
