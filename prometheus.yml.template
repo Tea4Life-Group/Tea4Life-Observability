@@ -1,29 +1,32 @@
-# prometheus.yml
+# This file is rendered by prometheus/render-config.sh.
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
 
 scrape_configs:
   - job_name: order-service
-    metrics_path: /actuator/prometheus
+    scheme: __ORDER_SCHEME__
+    metrics_path: __ORDER_PATH__
     static_configs:
       - targets:
-          - order-service:8080
+          - __ORDER_HOST__
         labels:
           service: order-service
 
   - job_name: product-service
-    metrics_path: /actuator/prometheus
+    scheme: __PRODUCT_SCHEME__
+    metrics_path: __PRODUCT_PATH__
     static_configs:
       - targets:
-          - product-service:8080
+          - __PRODUCT_HOST__
         labels:
           service: product-service
 
   - job_name: user-service
-    metrics_path: /actuator/prometheus
+    scheme: __USER_SCHEME__
+    metrics_path: __USER_PATH__
     static_configs:
       - targets:
-          - user-service:8080
+          - __USER_HOST__
         labels:
           service: user-service

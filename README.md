@@ -5,25 +5,21 @@ Prometheus and Grafana config for Tea4Life backend metrics.
 ## Dokploy deployment
 
 1. Bind this repository as a Docker Compose app in Dokploy.
-2. Make sure the external Docker network in `docker-compose.yml` exists:
+2. Configure these environment variables in Dokploy:
 
-   ```yaml
-   tea4life-backend-network
+   ```text
+   ORDER_METRICS_URL=https://api.tea4life.click/order-service/actuator/prometheus
+   PRODUCT_METRICS_URL=https://api.tea4life.click/product-service/actuator/prometheus
+   USER_METRICS_URL=https://api.tea4life.click/user-service/actuator/prometheus
    ```
 
-3. Attach these backend services to that same network:
-
-   - `order-service`
-   - `product-service`
-   - `user-service`
-
-4. Deploy the compose app.
-5. Add domains in Dokploy:
+3. Deploy the compose app.
+4. Add domains in Dokploy:
 
    - Prometheus: container port `9090`
    - Grafana: container port `3000`
 
-6. Open Prometheus target health:
+5. Open Prometheus target health:
 
    ```text
    https://prometheus.tea4life.click/targets
@@ -31,7 +27,7 @@ Prometheus and Grafana config for Tea4Life backend metrics.
 
 All three scrape targets should be `UP`.
 
-7. Open Grafana and log in with the configured credentials:
+6. Open Grafana and log in with the configured credentials:
 
    ```text
    https://grafana.tea4life.click
@@ -70,5 +66,3 @@ Each dashboard contains the requested 11 panels:
 - JVM Memory by Area
 - HikariCP Connections
 - CPU Usage
-
-If the backend network has a different name on Dokploy, update `docker-compose.yml` before deploying.

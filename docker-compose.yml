@@ -5,15 +5,17 @@ services:
     restart: unless-stopped
     ports:
       - "9090:9090"
+    environment:
+      ORDER_METRICS_URL: ${ORDER_METRICS_URL:-https://api.tea4life.click/order-service/actuator/prometheus}
+      PRODUCT_METRICS_URL: ${PRODUCT_METRICS_URL:-https://api.tea4life.click/product-service/actuator/prometheus}
+      USER_METRICS_URL: ${USER_METRICS_URL:-https://api.tea4life.click/user-service/actuator/prometheus}
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus.yml.template:/etc/prometheus/prometheus.yml.template:ro
+      - ./prometheus/render-config.sh:/etc/prometheus/render-config.sh:ro
       - prometheus-data:/prometheus
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-      - "--storage.tsdb.path=/prometheus"
-      - "--web.enable-lifecycle"
-    networks:
-      - tea4life-backend-network
+    entrypoint:
+      - /bin/sh
+      - /etc/prometheus/render-config.sh
 
   grafana:
     image: grafana/grafana:latest
@@ -31,13 +33,7 @@ services:
       - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
     depends_on:
       - prometheus
-    networks:
-      - tea4life-backend-network
 
 volumes:
   prometheus-data:
   grafana-data:
-
-networks:
-  tea4life-backend-network:
-    external: true
